@@ -18,6 +18,7 @@ for batch in uproot.iterate(files,filter_name="/kl|kltsh/i"):
     cutRight = (ak.sum(batch["kl.status"], axis=1) == 1) & (batch["kltsh"]["plane"] >= 18)
     # For each data field, flatten and append the values of the awkward array to their corresponding lists and convert them to NumPy arrays
     for field in data_fields:
+        # cutLeft and cutRight contain boolean values which awkward uses for its boolean masking operation
         aLeft[field].append(ak.flatten(ak.flatten(batch["kltsh"][field][cutLeft])).to_numpy())
         aRight[field].append(ak.flatten(ak.flatten(batch["kltsh"][field][cutRight])).to_numpy())
 
